@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+	$(function() {//
+		var inputArr;
+		var tr;
+		var STOCKNO;
+		var arr;
+		$("#btn").click(function() {//
+		// 			var inputArr =$("input type=text").val();
+			var inputArr = {
+				id : $("#id").val()
+			};
+			$.ajax("loginMember", {type : 'post',data : inputArr,success : function(id) {
+					if (id == "null") { //id틀린것도 빈것과 똑같이 작용함
+						alert("로그인실패입니다");
+					} else {//
+// 						alert("로그인되었습니다");
+// 						$("#div").empty();
+
+						$.ajax("/listStock", {success : function(data) {
+								arr = data;
+								$.each(data, function(idx, list) {
+									tr = $("<tr\>").attr("idx", idx);
+									var td1 = $("<td\>").html(list.stockname);
+									var td2 = $("<td\>").html(list.now);
+									tr.append(td1, td2);
+									$("#tb1").append(tr);
+								})
+								$("tr").click(function() {
+									var idx = $(this).attr("idx");
+									var stock = arr[idx];
+									var stockno = {stockno : stock.stockno};
+									$.ajax("/detailStock", {data : stockno, success : function(item) {//{data:### 이부분은 무조건 객체만 와야함 꼭기억
+											
+											$.each(item, function(i,j) {
+												alert(i)
+											
+												var td = $("<td></td>").html(value);
+												$(tr).append(td);
+											})
+												$("#tb2").append(tr);
+										}
+									})
+								})
+							}})
+					}}
+			})
+		})
+	})
+</script>
+</head>
+<body>
+	<table border="1" width="80%" id="tb1"></table><br>
+	<table border="1" width="80%" id="tb2">
+		<tr>
+			<td>주식명</td>
+			<td>현재가</td>
+			<td>상한가</td>
+			<td>하한가</td>
+		</tr>
+	</table>
+	<input type="text" id="id">
+	<button id="btn">로그인</button>
+
+</body>
+</html>

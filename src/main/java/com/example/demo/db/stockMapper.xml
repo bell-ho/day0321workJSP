@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="stock">
+
+	<select id="select" resultType="stockVo">
+		select * from stock
+	</select>
+
+	<select id="detail" resultType="stockVo">
+		select * from stock where stockno=#{stockno}
+	</select>
+
+	<insert id="insert">
+		insert into stock
+		values(seq_stock.nextval,#{stockname},#{qty},#{now},#{max},#{min})
+	</insert>
+	
+	<delete id="delete">
+		delete from stock where stockno=#{stockno}
+	</delete>
+	
+	<update id="update">
+		update stock set stockname=#{stockname},qty=#{qty},now=#{now},max=#{max},min=#{min} where stockno=#{stockno}
+	</update>
+	
+	<update id="updateqty">
+		update stock set qty=#{sumqty} where stockno=#{stockno}
+	</update>
+</mapper>

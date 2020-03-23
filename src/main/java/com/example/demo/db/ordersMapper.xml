@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="orders">
+
+	<select id="list" resultType="ordersVo">
+		select * from orders where memberno = #{memberno}
+	</select>
+	
+	<select id="selectAll" resultType="ordersVo">
+		select * from orders where orderno=#{orderno}
+	</select>
+	
+	<insert id="insert">
+		insert into orders values(seq_orders.nextval,#{memberno},#{stockno},#{orderqty},#{price})
+	</insert>
+	
+	<delete id="delete">
+		delete from orders where orderno=#{orderno}
+	</delete>
+	
+</mapper>
